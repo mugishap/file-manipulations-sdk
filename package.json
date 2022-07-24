@@ -1,0 +1,34 @@
+{
+  "name": "file-manipulations-sdk",
+  "version": "1.0.0",
+  "description": "File manipulations SDK using Nodejs.These files include Excel and other different file",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mugishap/file-manipulations-sdk.git"
+  },
+  "keywords": [
+    "files",
+    "manipulations",
+    "sdk",
+    "file-manipulations",
+    "file-manipulations-sdk",
+    "excel",
+    "json",
+    "pdf",
+    "json-to-excel",
+    "excel-to-db"
+  ],
+  "author": "precieux33",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mugishap/file-manipulations-sdk/issues"
+  },
+  "homepage": "https://github.com/mugishap/file-manipulations-sdk#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
