@@ -1,10 +1,9 @@
 const XLSX = require('xlsx');
 
 exports.getJsonFromDatabase = async (req, res) => {
-
+    
 }
 exports.uploadExcelFile = async (req, res) => {
-
 
     const parseExcel = (filename) => {
 
