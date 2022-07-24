@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const connection = require('./models/database')
 const PORT = process.env.PORT
-const router = require('./routes/routes')
+const {router} = require('./routes/routes')
 require('dotenv').config()
 
 connection.connect((err) => {
