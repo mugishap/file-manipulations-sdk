@@ -4,6 +4,8 @@ const connection = require('./../models/database')
 const { inserter } = require('../utils/inserter')
 const { getDataInDB } = require('../utils/getter')
 const { getNewEntries } = require('../utils/comparer')
+const difference = require('array-difference')
+
 
 exports.getJsonFromDatabase = async (req, res) => {
     try {
@@ -21,20 +23,28 @@ exports.uploadExcelFile = async (req, res) => {
         const data = parseExcel('uploads/' + req.file.filename)
 
         const array1 = data[0].data
-        const array2 = getDataInDB()
-        console.log(array1, array2)
-        //Compare data from file with data in database
-        const newEntries = getNewEntries(array1, array2)
-        console.log("New Entries :" + newEntries)
+        const query = 'SELECT * FROM items'
 
-        //Insert new data into database
-        const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
-        if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })
-        if (inserted == "") return res.status(500).json({ error: 'No data was inserted. File not changed!!!' })
+        connection.query(query, (err, rows, fields) => {
+            if (err) {
+                console.log(err)
+            } else {
+                // return rows
 
-        //Check for updated data
+                //Compare data from file with data in database
+                const newEntries = getNewEntries(array1, rows)
+                console.log("()====>New Entries :" + difference(array1, rows))
+                return
+                //Insert new data into database
+                const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
+                if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })
+                if (inserted == "") return res.status(500).json({ error: 'No data was inserted. File not changed!!!' })
 
-        return res.status(200).json({ message: "Excel file uploaded successfully and parsed int database", data })
+                //Check for updated data
+                return res.status(200).json({ message: "Excel file uploaded successfully and parsed int database", length: data.length, data })
+            }
+        })
+
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error.message })
