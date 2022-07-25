@@ -46,7 +46,7 @@ exports.uploadExcelFile = async (req, res) => {
 
 
                 const newEntries = getNewEntries(array1, array2)
-                console.log("New Entries: " + newEntries)
+                console.log("New Entries: " + newEntries.length)
 
                 //Get changed rows and updated the in database
                 const changedRows = array2.filter(element => {
@@ -55,10 +55,13 @@ exports.uploadExcelFile = async (req, res) => {
                 if (changedRows.length > 0) {
                     updater(changedRows)
                 }
-                //Insert new data into database
-                const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
-                if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })
-                if (inserted == "") return res.status(500).json({ error: 'No data was inserted. File not changed!!!' })
+                if (newEntries.length > 0) {
+
+                    //Insert new data into database
+                    const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
+                    if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })
+                    
+                }
 
                 //Check for updated data
                 return res.status(200).json({ message: "Excel file uploaded successfully and parsed int database", length: rows.length, data })
