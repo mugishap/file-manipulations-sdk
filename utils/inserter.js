@@ -8,7 +8,6 @@ exports.inserter = (array) => {
             if (err) {
                 console.log(err)
                 return false
-
             } else {
                 console.log(rows)
                 return true

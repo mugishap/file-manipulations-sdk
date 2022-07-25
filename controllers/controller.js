@@ -32,9 +32,8 @@ exports.uploadExcelFile = async (req, res) => {
 exports.getAllTableData = async (req, res) => {
     try {
         const query = 'SELECT * FROM items;'
-        connection.query(query, function (err, rows) {
+        connection.query(query,  (err, rows)=> {
             if (err) {
-                console.log("The error is here")
                 return res.status(200).json({ error: err })
             } else {
                 console.log(rows)
