@@ -1,18 +1,12 @@
 
-exports.comparer = (array1, array2) => {
-    let result = []
+exports.getNewEntries = (array1, array2) => {
+    const newElements = []
     array1.forEach(element => {
-        let found = false
-        array2.forEach(element2 => {
-            if (element.code === element2.code) {
-                found = true
-            }
+        if (!array2.includes(element)) {
+            newElements.push(element)
         }
-        )
-        if (!found) {
-            result.push(element)
-        }
-    }
-    )
-    return result
+    })
+}
+exports.compareRows = (array1, array2) => {
+
 }
