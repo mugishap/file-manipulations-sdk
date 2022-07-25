@@ -1,3 +1,5 @@
+const XLSX = require('xlsx');
+
 exports.parseExcel = (filename) => {
 
     const excelData = XLSX.readFile(filename);

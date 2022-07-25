@@ -1,4 +1,3 @@
-const XLSX = require('xlsx');
 const { parseExcel } = require('./../utils/parser')
 const path = require('path')
 const connection = require('./../models/database')
@@ -13,11 +12,14 @@ exports.getJsonFromDatabase = async (req, res) => {
 }
 exports.uploadExcelFile = async (req, res) => {
     try {
-
         //Upload file using multer
-        parseExcel(__basedir + '/uploads/' + req.file.filename).forEach(element => {
+        console.log("Uploading file")
+        //Parse data from file
+        const data = parseExcel('uploads/' + req.file.filename)
+        data.forEach(element => {
             console.log(element.data);
         });
+        return res.status(200).json({ message: "Excel file uploaded successfully and parsed int database", data })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error.message })
@@ -33,7 +35,7 @@ exports.getAllTableData = async (req, res) => {
                 return res.status(200).json({ error: err })
             } else {
                 console.log(rows)
-                return res.status(200).json({rows})
+                return res.status(200).json({ rows })
             }
         })
     } catch (error) {
