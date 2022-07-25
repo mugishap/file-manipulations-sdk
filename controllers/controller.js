@@ -1,6 +1,7 @@
 const { parseExcel } = require('./../utils/parser')
 const path = require('path')
 const connection = require('./../models/database')
+const { inserter } = require('../utils/inserter')
 
 exports.getJsonFromDatabase = async (req, res) => {
     try {
@@ -13,12 +14,14 @@ exports.getJsonFromDatabase = async (req, res) => {
 exports.uploadExcelFile = async (req, res) => {
     try {
         //Upload file using multer
-        console.log("Uploading file")
+        console.log(`Uploading file ${req.file.filename}`)
         //Parse data from file
         const data = parseExcel('uploads/' + req.file.filename)
-        data.forEach(element => {
-            console.log(element.data);
-        });
+        // data.forEach(element => {
+            console.log(data[0].data);
+        // });
+        const inserted = inserter(data[0].data)
+        if(!inserted)return res.status(500).json({error:'Error inserting data'})
         return res.status(200).json({ message: "Excel file uploaded successfully and parsed int database", data })
     } catch (error) {
         console.log(error)
