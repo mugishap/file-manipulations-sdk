@@ -34,7 +34,6 @@ exports.uploadExcelFile = async (req, res) => {
                 //Compare data from file with data in database
                 const newEntries = getNewEntries(array1, rows)
                 console.log("()====>New Entries :" + difference(array1, rows))
-                return
                 //Insert new data into database
                 const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
                 if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })

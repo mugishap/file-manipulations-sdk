@@ -4,6 +4,7 @@ const { compareObject, compareArray } = require('compare-object-array');
 
 exports.getNewEntries = (array1, array2) => {
     const newElements = difference(array1, array2)
+    console.log("New Elements :::======> ",newElements);
     return newElements
 }
 exports.compareRows = (array1, array2) => {

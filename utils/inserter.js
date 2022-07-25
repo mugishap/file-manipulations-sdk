@@ -5,7 +5,7 @@ exports.inserter = (array) => {
         const query = `INSERT INTO items (code,description,item_name,instruction,unit,price,insurance,status) VALUES ('${element.code}','${element.description}','${element.item_name}','${element.instruction}','${element.unit}',${element.price},'${element.insurance}','${element.status}')`
         connection.query(query, (err, rows) => {
             if (err) {
-                console.log(err)
+                console.log(err.message)
                 return err
             } else {
                 console.log("Row inserted")
