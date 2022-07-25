@@ -2,7 +2,7 @@ const { parseExcel } = require('./../utils/parser')
 const path = require('path')
 const connection = require('./../models/database')
 const { inserter } = require('../utils/inserter')
-const { getNewEntries } = require('../utils/comparer')
+const { getNewEntries, rowComparer } = require('../utils/comparer')
 const { updater } = require('../utils/updater')
 
 
@@ -49,18 +49,16 @@ exports.uploadExcelFile = async (req, res) => {
                 console.log("New Entries: " + newEntries.length)
 
                 //Get changed rows and updated the in database
-                const changedRows = array2.filter(element => {
-                    return newEntries.includes(element.code)
-                })
-                if (changedRows.length > 0) {
-                    updater(changedRows)
-                }
                 if (newEntries.length > 0) {
-
                     //Insert new data into database
                     const inserted = (newEntries.length > 0) ? inserter(newEntries) : ""
                     if (inserted == false) return res.status(500).json({ error: 'Error in inserting data' })
-                    
+                }
+
+                const changedRows = rowComparer(array1, array2)
+
+                if (changedRows.length > 0) {
+                    updater(changedRows)
                 }
 
                 //Check for updated data
