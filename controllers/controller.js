@@ -4,7 +4,7 @@ const connection = require('./../models/database')
 const { inserter } = require('../utils/inserter')
 const { getNewEntries, rowComparer } = require('../utils/comparer')
 const { updater } = require('../utils/updater')
-
+const jwt = require('jsonwebtoken')
 
 exports.getJsonFromDatabase = async (req, res) => {
     try {
@@ -98,3 +98,14 @@ exports.home = async (req, res) => {
     }
 }
 
+exports.getAuthentication = async (req, res) => {
+    try {
+        const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+        const token = jwt.sign({ expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY,{expiresIn: '1min'})
+        if(!token) return res.status(500).json({ error: 'Error in generating token' })
+        return res.status(200).json({ token,message:"Authenticated successfully. Your token expires in one hour." })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: error.message })
+    }
+}
