@@ -6,14 +6,33 @@ const { getNewEntries, rowComparer } = require('../utils/comparer')
 const { updater } = require('../utils/updater')
 const jwt = require('jsonwebtoken')
 
+
 exports.getJsonFromDatabase = async (req, res) => {
     try {
-
+        const query = 'SELECT * FROM items'
+        connection.query(query, (err, result, fields) => {
+            if (err) {
+                return res.status(200).json({ error: err })
+            } else {
+                console.log(result)
+                return res.status(200).json({ result })
+            }
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }
+
+exports.home = async (req, res) => {
+    try {
+        return res.status(200).sendFile(path.resolve('views/index.html'))
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 exports.uploadExcelFile = async (req, res) => {
     try {
         //Upload file using multer
@@ -101,7 +120,7 @@ exports.home = async (req, res) => {
 exports.getAuthentication = async (req, res) => {
     try {
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-        const token = jwt.sign({ expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY,{expiresIn: '1min'})
+        const token = jwt.sign({ expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY,{expiresIn: '1h'})
         if(!token) return res.status(500).json({ error: 'Error in generating token' })
         return res.status(200).json({ token,message:"Authenticated successfully. Your token expires in one hour." })
     } catch (error) {
