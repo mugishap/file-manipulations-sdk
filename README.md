@@ -1,8 +1,13 @@
+<body>
 <p align="center">
   <a href="" rel="noopener">
  <img style="border-radius:100%;" width=200px height=200px src="https://play-lh.googleusercontent.com/1nfAdJs2Ep2q1skM7QwJ1uHooWSbpFkbIBHhAX6EmdzEKmtk42713TiTU28mWlkcFKPA" alt="Project logo"></a>
 </p>
-
+<style>
+  *,body{
+    scroll-behaviour: smooth;
+  }
+</style>
 <h3 align="center">file-manipulations-sdk</h3>
 
 <div align="center">
@@ -27,8 +32,7 @@
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
+- [Contributing](#deployment)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
@@ -104,3 +108,4 @@ See also the list of [contributors](https://github.com/mugishap/file-manipulatio
 - Easy excel file manipulation for businesses.
 - Inspiration
 - References
+</body>
