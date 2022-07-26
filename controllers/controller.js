@@ -1,3 +1,4 @@
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 const { parseExcel } = require('./../utils/parser')
 const path = require('path')
 const connection = require('./../models/database')
@@ -6,7 +7,6 @@ const { getNewEntries, rowComparer } = require('../utils/comparer')
 const { updater } = require('../utils/updater')
 const jwt = require('jsonwebtoken')
 
-
 exports.getJsonFromDatabase = async (req, res) => {
     try {
         const query = 'SELECT * FROM items'
@@ -14,12 +14,12 @@ exports.getJsonFromDatabase = async (req, res) => {
             if (err) {
                 return res.status(200).json({ error: err })
             } else {
-                console.log(result)
-                return res.status(200).json({ result })
+
+                return res.status(200).json({ length: result.length, result })
             }
         })
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }
@@ -28,15 +28,18 @@ exports.home = async (req, res) => {
     try {
         return res.status(200).sendFile(path.resolve('views/index.html'))
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }
 
 exports.uploadExcelFile = async (req, res) => {
     try {
+        if (!req.file) return res.status(400).json({ error: 'No file was uploaded' })
+        if (req.file.filename !== "uploadexcel-items.xlsx") return res.status(400).json({ error: "File name should be 'items.xlsx' " })
+
         //Upload file using multer
-        console.log(`Uploading file ${req.file.filename}`)
+        //console.log(`Uploading file ${req.file.filename}`)
         //Parse data from file
         const data = parseExcel('uploads/' + req.file.filename)
 
@@ -45,7 +48,7 @@ exports.uploadExcelFile = async (req, res) => {
 
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log(err)
+                //console.log(err)
             } else {
                 // return rows
 
@@ -65,7 +68,7 @@ exports.uploadExcelFile = async (req, res) => {
 
 
                 const newEntries = getNewEntries(array1, array2)
-                console.log("New Entries: " + newEntries.length)
+                //console.log("New Entries: " + newEntries.length)
 
                 //Get changed rows and updated the in database
                 if (newEntries.length > 0) {
@@ -86,7 +89,7 @@ exports.uploadExcelFile = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }
@@ -98,13 +101,13 @@ exports.getAllTableData = async (req, res) => {
             if (err) {
                 return res.status(200).json({ error: err })
             } else {
-                console.log(result)
+                //console.log(result)
                 return res.status(200).json({ result })
             }
         })
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({ error: error.message })
+        //console.log(error)
+        return res.status(200).json({ length: result.length, result })
     }
 }
 
@@ -112,7 +115,7 @@ exports.home = async (req, res) => {
     try {
         return res.status(200).sendFile(path.resolve('views/index.html'))
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }
@@ -124,19 +127,18 @@ exports.getAuthentication = async (req, res) => {
             if (hasToken) {
                 const decoded = await jwt.verify(hasToken, JWT_SECRET_KEY)
                 if (decoded) {
-                    return res.status(200).json({ message: `You are already authenticated and you token expires in ${decoded.given}` })
+                    return res.status(200).json({ message: `You are already authenticated and your token was given ${decoded.given}` })
                 }
                 else {
                     return res.status(200).json({ message: "You are not authenticated" })
                 }
             }
         }
-        const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-        const token = jwt.sign({ given: new Date(), expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY, { expiresIn: '1h' })
+        const token = jwt.sign({ assignedMinutes: new Date().getMinutes(), given: new Date(), expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY, { expiresIn: '1h' })
         if (!token) return res.status(500).json({ error: 'Error in generating token' })
         return res.status(200).json({ token, message: "Authenticated successfully. Your token expires in one hour." })
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }

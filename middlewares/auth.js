@@ -13,7 +13,7 @@ exports.checkForAccess = async (req, res, next) => {
         req.user = decoded
         next()
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({ error: error.message })
     }
 }

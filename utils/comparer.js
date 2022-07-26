@@ -32,7 +32,7 @@ exports.rowComparer = (array1, array2) => {
         }
     }
 
-    console.log("Changed Rows: ", changedRows)
+    //console.log("Changed Rows: ", changedRows)
     return changedRows
 }
 
