@@ -42,7 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## 🚀 Demo <a id = "demo"></a>
 This is a demo of how the API works
-<video width=550 height=300 controls autoplay src="https://res.cloudinary.com/precieux/video/upload/v1653120652/agqqj31wya9xcse88deg.mkv"></video>
+<video width=550 height=300 controls autoplay src="https://res.cloudinary.com/precieux/video/upload/v1658833288/file-manipulations-sdk_preview_qxnj4s.webm"></video>
 
 ### Prerequisites
 
