@@ -119,10 +119,22 @@ exports.home = async (req, res) => {
 
 exports.getAuthentication = async (req, res) => {
     try {
+        if (req.headers.authorization) {
+            const hasToken = req.headers.authorization.split(" ")[1]
+            if (hasToken) {
+                const decoded = await jwt.verify(hasToken, JWT_SECRET_KEY)
+                if (decoded) {
+                    return res.status(200).json({ message: `You are already authenticated and you token expires in ${decoded.given}` })
+                }
+                else {
+                    return res.status(200).json({ message: "You are not authenticated" })
+                }
+            }
+        }
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-        const token = jwt.sign({ expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY,{expiresIn: '1h'})
-        if(!token) return res.status(500).json({ error: 'Error in generating token' })
-        return res.status(200).json({ token,message:"Authenticated successfully. Your token expires in one hour." })
+        const token = jwt.sign({ given: new Date(), expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY, { expiresIn: '1h' })
+        if (!token) return res.status(500).json({ error: 'Error in generating token' })
+        return res.status(200).json({ token, message: "Authenticated successfully. Your token expires in one hour." })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error.message })
