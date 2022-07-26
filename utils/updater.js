@@ -16,7 +16,7 @@ const getNewStatus = (currentStatus) => {
 
 exports.updater = (arrayOfChangedElements) => {
     arrayOfChangedElements.forEach(element => {
-        const query = `UPDATE items SET code='${element.code}',description='${element.description}',item_name='${element.item_name}',instruction='${element.instruction}',unit='${element.unit}',price=${element.price},insurance='${element.insurance}',status='${getNewStatus(element.status)}' WHERE code='${element.code}' `
+        const query = `UPDATE items SET code='${element.code}',description='${element.description}',item_name='${element.item_name}',instruction='${element.instruction}',unit='${element.unit}',price=${element.price},insurance='${element.insurance}',status='${getNewStatus(element.status)},last_modified=${new Date()}' WHERE code='${element.code}' `
         connection.query(query, (err, rows) => {
             //console.log(query)
             if (err) {
