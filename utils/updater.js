@@ -1,13 +1,16 @@
 const connection = require('./../models/database')
 
 const getNewStatus = (currentStatus) => {
-    if (currentStatus === "NEW") {
+    if (currentStatus.toLowerCase() === "new") {
         return "UPDATEDx1"
     }
-    else if (currentStatus[0] === "U") {
+    else if (currentStatus[0].toLowerCase() === "u") {
         let times = currentStatus.split("x")[1]
         times++
         return "UPDATEDx" + times
+    }
+    else {
+        return "NEW"
     }
 }
 

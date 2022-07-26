@@ -5,7 +5,7 @@ const { uploadFile } = require('./../utils/store')
 const { home, getJsonFromDatabase, uploadExcelFile, getAllTableData ,getAuthentication} = require('./../controllers/controller')
 const { checkForAccess } = require('../middlewares/auth')
 
-router.get('/',checkForAccess, home)
+router.get('/', home)
 router.get('/getjson', checkForAccess, getJsonFromDatabase)
 router.get('/getalldata', checkForAccess, getAllTableData)
 router.post('/uploadexcel', [checkForAccess, uploadFile.single('uploadexcel')], uploadExcelFile)
