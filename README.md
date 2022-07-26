@@ -40,6 +40,10 @@ This is a simple API that allows you to manipulate files. This is mostly for exc
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
+## 🚀 Demo <a id = "demo"></a>
+This is a demo of how the API works
+<video width=550 height=300 controls autoplay src="https://res.cloudinary.com/precieux/video/upload/v1653120652/agqqj31wya9xcse88deg.mkv"></video>
+
 ### Prerequisites
 
 What things you need to test of use the API and how to install prerequisites.
