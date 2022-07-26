@@ -1,13 +1,9 @@
-<body>
+<body style="scroll-behaviour:'smooth'">
 <p align="center">
   <a href="" rel="noopener">
  <img style="border-radius:100%;" width=200px height=200px src="https://play-lh.googleusercontent.com/1nfAdJs2Ep2q1skM7QwJ1uHooWSbpFkbIBHhAX6EmdzEKmtk42713TiTU28mWlkcFKPA" alt="Project logo"></a>
 </p>
-<style>
-  *,body{
-    scroll-behaviour: smooth;
-  }
-</style>
+
 <h3 align="center">file-manipulations-sdk</h3>
 
 <div align="center">
