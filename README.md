@@ -27,6 +27,7 @@
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
+- [Endpoints](#endpoints)
 - [Built Using](#built_using)
 - [Contributing](#deployment)
 - [Authors](#authors)
@@ -86,6 +87,20 @@ How to run the automated tests for this system.
 
 You can use the API to manipulate the data. BaseURL is https://xcel-db-manager.herokuapp.com/
 
+## 📝 Endpoints <a id="endpoints"></a>
+Get authentication key
+```
+curl -X GET https://xcel-db-manager.herokuapp.com/getauthentication
+```
+Get all data
+
+    ```
+    curl -X GET -H "Authorization: Bearer <your_key>" https://xcel-db-manager.herokuapp.com/getalldata
+    ```
+Upload excel file
+    ```
+    curl -X POST -H "Authorization: Bearer <your_key>" -F "file=@<path_to_file>" https://xcel-db-manager.herokuapp.com/uploadexcel
+    ```
 ## 🚀 Deployment <a id = "deployment"></a>
 
 This API is not currently not available for public contributions.
