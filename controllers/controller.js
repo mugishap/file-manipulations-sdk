@@ -134,7 +134,7 @@ exports.getAuthentication = async (req, res) => {
                 }
             }
         }
-        const token = jwt.sign({ assignedMinutes: new Date().getMinutes(), given: new Date(), expiry: Math.floor(Date.now() / 1000) + (60 * 60) }, JWT_SECRET_KEY, { expiresIn: '1h' })
+        const token = jwt.sign({}, JWT_SECRET_KEY, { expiresIn: '1h' })
         if (!token) return res.status(500).json({ error: 'Error in generating token' })
         return res.status(200).json({ token, message: "Authenticated successfully. Your token expires in one hour." })
     } catch (error) {

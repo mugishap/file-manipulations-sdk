@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const { registerSchema } = require('swaggiffy')
 require('dotenv').config()
 
 const connection = mysql.createConnection({
@@ -9,3 +10,4 @@ const connection = mysql.createConnection({
 })
 
 module.exports = connection
+
